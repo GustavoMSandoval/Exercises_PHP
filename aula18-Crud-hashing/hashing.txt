@@ -1,0 +1,30 @@
+<?php
+
+$sensitiveData = "Gustavo";
+$salt = bin2hex(random_bytes(16));// Generate random salt
+$pepper = "ASecretPepperString";
+
+$dataToHash = $sensitiveData . $salt . $pepper;
+$hash = hash("sha256",$dataToHash);
+
+/*-----*/ 
+
+$sensitiveData = "Gustavo";
+
+$storedSalt = $salt;
+$storedHash = $hash;
+$pepper = "ASecretPepperString";
+
+$dataToHash = $sensitiveData . $storedSalt . $pepper;
+
+$verificationHash = hash("sha256",$dataToHash);
+
+if ($storedHash == $verificationHash) {
+    echo "the data are the same\n";
+    echo $storedHash."\n";
+    echo $verificationHash;
+} else {
+    echo "the data are not the same\n";
+    echo $storedHash."\n";
+    echo $verificationHash;
+}
